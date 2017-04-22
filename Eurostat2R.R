@@ -38,8 +38,8 @@ knitr::kable(as.data.frame(ls("package:eurostat")))
 # Get Eurostat data listing
 datasetList <- get_eurostat_toc()
 
-# # Check the first items
-library(knitr)
+# Check the first items
+# library(knitr)
 kable(head(datasetList))
 |title                                                    |code      |type    |last update of data |last table structure change |data start |data end |values |
 |:--------------------------------------------------------|:---------|:-------|:-------------------|:---------------------------|:----------|:--------|:------|
@@ -60,6 +60,11 @@ kable(head(search_eurostat("cancer")))
 |Breast cancer and cervical cancer screenings                                                                            |hlth_ps_scre   |dataset |12.01.2017          |07.07.2016                  |2000       |2015     |NA     |
 |Self-reported colorectal cancer screening test by sex, age and educational attainment level among people aged 50-74 (%) |hlth_ehis_hc4  |dataset |20.03.2014          |29.08.2013                  |2008       |2008     |NA     |
 
+# Searching Eurostat datasets  
+results <- search_eurostat("cancer", type = "dataset")
+# Display the first rows
+kable(head(results))
+  
   
 # Downloading data from Eurostat
 # Two methods of download are available : the bulk download (the fastest method) facility and the Web Services’ JSON API. The later 
