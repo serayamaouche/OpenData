@@ -17,6 +17,25 @@ devtools::install_github("ropenhealth/openfda")
 # Load openfda
 library("openfda")
 
+# Obtaining help
+? fda_exec
+# chain_query :	Pipe operator for chaining together operations.
+# copy_query:	Make a copy of query (keeps the class).
+# extract_field:	Fetch a (nested field) from a list or dataframe.
+# fda_api_key:	Attach an API key to the query.
+# fda_count:	Count results from a given field.
+# fda_debug:	Turn off/on API debugging.
+# fda_exec:	Execute a query.
+# fda_fetch:	Fetch the given URL as JSON.
+# fda_filter:	Apply a filter to a query
+# fda_limit:	Set the number of results desired by this query.
+# fda_plot:	Plot a count query.
+# fda_query:	Create a new query.
+# fda_search:	Fetch search results.
+# fda_skip:	Set the number of records to skip that match the search parameter.
+# fda_url:	Return the URL that will be fetched for the current query.
+
+
 # Queries generally have the following format
 # fda_query(endpoint) %>%
 #   fda_filter(field, value) %>%
