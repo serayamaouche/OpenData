@@ -56,5 +56,18 @@ head(patient_ages)
 6   63 66664
 names(patient_ages)
 
+# Filter the results to count on using the fda_filter() method
+paxil_ages = fda_query("/drug/event.json") %>%
+  fda_filter("patient.drug.openfda.generic_name", "paroxetine") %>%
+  fda_count("patient.patientonsetage") %>%
+  fda_exec()
+
+> Fetching: https://api.fda.gov/drug/event.json?search=patient.drug.openfda.generic_name:paroxetine&count=patient.patientonsetage
+
+# Using the openFDA API with your API key using the function fda_api_key()
+patient_ages = fda_query("/drug/event.json") %>%
+  fda_api_key("my_FDAapi_key") %>%
+  fda_count("patient.patientonsetage") %>%
+  fda_exec()
 
 
