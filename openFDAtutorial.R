@@ -58,6 +58,10 @@ head(patient_ages)
 6   63 66664
 names(patient_ages)
 
+# plot the patient ages it with ggplot2
+library("ggplot2")
+qplot(x=term, y=count, data=patient_ages)
+
 # Filter the results to count on using the fda_filter() method
 paxil_ages = fda_query("/drug/event.json") %>%
   fda_filter("patient.drug.openfda.generic_name", "paroxetine") %>%
