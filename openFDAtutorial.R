@@ -5,6 +5,8 @@
 # Date of last modification: 22 Apr 2017
 # Author: Seraya Maouche <seraya.maouche@iscb.org>
 # Short Description: This script provides functions to access OpenFDA API from R
+# This code is based on openFDA description : https://github.com/rOpenHealth/openfda
+# OpenFDA : https://open.fda.gov
 #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 # OpenFDA has not yet been added to CRAN
@@ -69,5 +71,13 @@ patient_ages = fda_query("/drug/event.json") %>%
   fda_api_key("my_FDAapi_key") %>%
   fda_count("patient.patientonsetage") %>%
   fda_exec()
+
+age_query = fda_query("/drug/event.json") %>%
+  fda_api_key("MYKEY") %>%
+  fda_count("patient.patientonsetage");
+
+paxil_ages = age_query %>% fda_filter("patient.drug.openfda.generic_name", "paroxetine") %>% fda_exec()
+zoloft_ages = age_query %>% fda_filter("patient.drug.openfda.generic_name", "sertraline") %>% fda_exec()
+
 
 
