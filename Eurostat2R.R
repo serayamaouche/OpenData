@@ -4,7 +4,10 @@
 # Date of last modification: 23 Apr 2017
 # Author: Seraya Maouche <seraya.maouche@iscb.org>
 # Short Description: This script provides functions to use Eurostat Open Data in R
-# This code is based on openFDA description : https://github.com/rOpenHealth/openfda
+# This code is based on eurostat tutorials
+# http://ropengov.github.io/eurostat/articles/2017_RJournal_manuscript/lahti-huovari-kainu-biecek.html
+# http://ropengov.github.io/r/2015/05/01/eurostat-package-examples/
+# http://ropengov.github.io/eurostat/articles/eurostat_tutorial.html
 # Eurostat Data : http://ec.europa.eu/eurostat/data/database
 # Eurostat Data on Data.gouv.fr, the French Open Platform for Open Data (https://www.data.gouv.fr)
 #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -33,6 +36,7 @@ library(eurostat)
 # Obtaining help
 # The Eurostat R package is based on the SmarterPoland package (https://cran.r-project.org/web/packages/SmarterPoland/index.html).
 knitr::kable(as.data.frame(ls("package:eurostat")))
+citation("eurostat")
 
 
 # Get Eurostat data listing
@@ -64,17 +68,36 @@ kable(head(search_eurostat("cancer")))
 results <- search_eurostat("cancer", type = "dataset")
 # Display the first rows
 kable(head(results))
+query$code[[1]]
   
+# Retrieve the a dataset using its identifier
+dataset <- get_eurostat(id = "tsdtr420", time_format = "num")
+kable(head(dataset))
   
 # Downloading data from Eurostat
 # Two methods of download are available : the bulk download (the fastest method) facility and the Web Services’ JSON API. The later 
 # method has a limitation of maximum 50 sub-indicators at a time
 # To download only a small section of the dataset the JSON API is faster and it allows a seletion of data before download. 
 
-# For the original data, see
-# http://ec.europa.eu/eurostat/tgm/table.do?tab=table&init=1&plugin=1&language=en&pcode=tsdtr210
-id <- search_eurostat("cancer",type = "table")$code[1]
-print(id)
+ 
+# library(dplyr)
+tmp1 <- get_eurostat("hlth_ehis_de1", time_format = "raw")
+tmp1 %>%
+  dplyr::filter( isced97 == "TOTAL" ,
+          sex != "T",
+          age != "TOTAL", geo == "FR") %>%
+  mutate(BMI = factor(bmi, 
+                      levels=c("LT18P5","18P5-25","25-30","GE30"), 
+                      labels=c("<18.5", "18.5-25", "25-30",">30"))) %>%
+  arrange(BMI) %>%
+  ggplot(aes(y=values, x=age, fill=BMI)) +
+  geom_bar(stat="identity") +
+  facet_wrap(~sex) + coord_flip() +
+  theme(legend.position="top") +
+  ggtitle("Body mass index (BMI) by sex and age") +
+  xlab("Age group") +
+  ylab("Fraction of population (%)") +  
+  scale_fill_brewer(type = "div")
   
 
 
