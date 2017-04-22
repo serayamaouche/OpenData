@@ -17,13 +17,23 @@ library(devtools)
 install_github("ropengov/eurostat")
 
 
-# Obtaining help
-# The Eurostat R package is based on the SmarterPoland package (https://cran.r-project.org/web/packages/SmarterPoland/index.html).
+# Install required packages
+reqPackages <- c("xml2","rvest","ggplot2","countrycode","tidyr","dplyr","knitr")
+#  Install packages
+inst <- match(reqPackages, .packages(all=TRUE))
+need <- which(is.na(inst))
+if (length(need) > 0) install.packages(reqPackages[need])
+  
+# Load packages
+lapply(reqPackages, require, character.only=T)
 
 # Load eurostat
 library(eurostat)
-library(rvest)
-library(xml2)
+
+# Obtaining help
+# The Eurostat R package is based on the SmarterPoland package (https://cran.r-project.org/web/packages/SmarterPoland/index.html).
+knitr::kable(as.data.frame(ls("package:eurostat")))
+
 
 # Get Eurostat data listing
 datasetList <- get_eurostat_toc()
@@ -56,7 +66,10 @@ kable(head(search_eurostat("cancer")))
 # method has a limitation of maximum 50 sub-indicators at a time
 # To download only a small section of the dataset the JSON API is faster and it allows a seletion of data before download. 
 
-
+# For the original data, see
+# http://ec.europa.eu/eurostat/tgm/table.do?tab=table&init=1&plugin=1&language=en&pcode=tsdtr210
+id <- search_eurostat("cancer",type = "table")$code[1]
+print(id)
   
 
 
