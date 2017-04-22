@@ -9,7 +9,8 @@
 # http://ropengov.github.io/r/2015/05/01/eurostat-package-examples/
 # http://ropengov.github.io/eurostat/articles/eurostat_tutorial.html
 # Eurostat Data : http://ec.europa.eu/eurostat/data/database
-# Eurostat Data on Data.gouv.fr, the French Open Platform for Open Data (https://www.data.gouv.fr)
+# Eurostat Data on Data.gouv.fr, the French Open Platform for Open Data: 
+# https://www.data.gouv.fr/fr/organizations/eurostat/
 #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 # Install Eurostat R Package
@@ -42,7 +43,7 @@ citation("eurostat")
 # Get Eurostat data listing
 datasetList <- get_eurostat_toc()
 
-# Check the first items
+# Display the first items
 # library(knitr)
 kable(head(datasetList))
 |title                                                    |code      |type    |last update of data |last table structure change |data start |data end |values |
@@ -70,17 +71,20 @@ results <- search_eurostat("cancer", type = "dataset")
 kable(head(results))
 query$code[[1]]
   
-# Retrieve the a dataset using its identifier
+# Retrieve  a dataset using its identifier
 dataset <- get_eurostat(id = "tsdtr420", time_format = "num")
 kable(head(dataset))
   
 # Downloading data from Eurostat
 # Two methods of download are available : the bulk download (the fastest method) facility and the Web Services’ JSON API. The later 
 # method has a limitation of maximum 50 sub-indicators at a time
-# To download only a small section of the dataset the JSON API is faster and it allows a seletion of data before download. 
+# To download only a small part of the dataset the JSON API is faster, it allows a seletion of data before download. 
+  
+# get_eurostat_json(id, filters = NULL, type = c("code", "label", "both"), lang = c("en", "fr", "de"), stringsAsFactors =  
+#                    default.stringsAsFactors())
 
- 
 # library(dplyr)
+# Adapted from 
 tmp1 <- get_eurostat("hlth_ehis_de1", time_format = "raw")
 tmp1 %>%
   dplyr::filter( isced97 == "TOTAL" ,
