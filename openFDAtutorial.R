@@ -58,7 +58,7 @@ head(patient_ages)
 6   63 66664
 names(patient_ages)
 
-# plot the patient ages it with ggplot2
+# Plot the patient ages it with ggplot2
 library("ggplot2")
 qplot(x=term, y=count, data=patient_ages)
 
