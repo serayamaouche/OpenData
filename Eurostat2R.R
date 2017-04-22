@@ -52,6 +52,11 @@ kable(head(search_eurostat("cancer")))
 
   
 # Downloading data from Eurostat
+# Two methods of download are available : the bulk download (the fastest method) facility and the Web Services’ JSON API. The later 
+# method has a limitation of maximum 50 sub-indicators at a time
+# To download only a small section of the dataset the JSON API is faster and it allows a seletion of data before download. 
+
+
   
 
 
